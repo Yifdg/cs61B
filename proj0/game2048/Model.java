@@ -137,7 +137,12 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
+        // TODO: Fill in th is function.
+        for(Tile tile:b){
+            if(tile==null){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -148,6 +153,13 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for(Tile tile :b){
+            if(tile!=null){
+                if(tile.value()==MAX_PIECE){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,7 +171,48 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+       for(int i=0;i<b.size();i++){
+           for(int j=0;j<b.size();j++){
+               if(b.tile(i,j)==null){
+                   return true;
+               }
+               if (checkTileMoveExist(b,i,j)){
+                   return true;
+               }
+           }
+       }
+       return false;
+    }
+    public static Boolean checkTileMoveExist(Board b,int col,int row){
+        Tile tile=b.tile(col,row);
+        if(checkTileValid(b,col-1,row)) {
+            if (tile.value() == b.tile(col -1, row).value()) {
+                return true;
+            }}
+        if(checkTileValid(b,col+1,row)) {
+                if (tile.value() == b.tile(col + 1, row).value()) {
+                    return true;
+                }}
+        if(checkTileValid(b,col,row-1)) {
+                if (tile.value() == b.tile(col , row-1).value()) {
+                    return true;
+                }}
+        if(checkTileValid(b,col,row+1)) {
+                if (tile.value() == b.tile(col, row+1).value()) {
+                    return true;
+                }
+        }
         return false;
+    }
+
+    private static Boolean checkTileValid(Board b,int col,int row){
+        if(col<0||col>b.size()-1||row<0||row>b.size()-1){
+            return false;
+        }
+        if(b.tile(col,row)==null){
+            return false;
+        }
+        return true;
     }
 
 
